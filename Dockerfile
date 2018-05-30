@@ -26,4 +26,13 @@ RUN set -eux; \
     rm -rf /var/lib/apt/lists/*; \
     rabbitmqadmin --version
 
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends wget; \
+    rm -rf /var/lib/apt/lists/*; \
+    cd /usr/lib/rabbitmq/lib/rabbitmq_server-3.7.5/plugins; \
+    wget --no-check-certificate https://github.com/Ayanda-D/rabbitmq-queue-master-balancer/releases/download/v0.0.3/rabbitmq_queue_master_balancer-0.0.3.ez
+
+RUN rabbitmq-plugins enable --offline rabbitmq_queue_master_balancer
+
 EXPOSE 15671 15672
